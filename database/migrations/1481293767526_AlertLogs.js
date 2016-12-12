@@ -10,7 +10,7 @@ class AlertLogsTableSchema extends Schema {
       table.integer('alert_type_device_id').unsigned()
       table.timestamp('created_at')
 
-      table.foreign('alert_type_device_id').references('alert_type_devices.id')
+      table.foreign('alert_type_device_id').references('alert_type_devices.id').onDelete('CASCADE')
     })
   }
 

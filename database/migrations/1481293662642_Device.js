@@ -11,6 +11,9 @@ class DevicesTableSchema extends Schema {
       table.text('description')
       table.boolean('public').default(0)
       table.timestamps()
+
+      table.integer('project_id').unsigned()
+      table.foreign('project_id').references('projects.id')
     })
   }
 

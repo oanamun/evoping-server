@@ -13,13 +13,11 @@
  */
 
 // const Factory = use('Factory')
-const UserSeed = use('UserSeed')
 
 class DatabaseSeeder {
 
   * run() {
     // yield Factory.model('App/Model/User').create(5)
-    yield UserSeed.run();
   }
 
 }
