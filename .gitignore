@@ -27,3 +27,4 @@ lib-cov
 
 # Mac Only
 .DS_Store
+/database/development.sqlite

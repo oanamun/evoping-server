@@ -9,6 +9,15 @@ class User extends Lucid {
     super.boot()
     this.addHook('beforeCreate', 'User.encryptPassword')
   }
+
+  //hide password field from JSON output
+  static get hidden() {
+    return ['password']
+  }
+
+  Project() {
+    return this.belongsToMany('App/Model/Project')
+  }
 }
 
 module.exports = User

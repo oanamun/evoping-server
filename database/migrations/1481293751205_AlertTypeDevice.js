@@ -12,7 +12,7 @@ class AlertTypeDevicesTableSchema extends Schema {
       table.timestamps()
 
       table.integer('check_id').unsigned()
-      table.foreign('check_id').references('checks.id')
+      table.foreign('check_id').references('checks.id').onDelete('CASCADE')
     })
   }
 
