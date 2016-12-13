@@ -8,9 +8,10 @@ class ChecksTableSchema extends Schema {
     this.create('checks', (table) => {
       table.increments()
       table.string('name')
+      table.string('host')
+      table.integer('port').default(80)
       table.enu('type', ['web', 'mysql', 'websocket'])
       table.json('special_info')
-      table.enu('method', ['GET', 'POST', 'PUT', 'DELETE'])
       table.integer('check_interval').unsigned().default(300)
       table.integer('max_response_time').unsigned().default(60)
       table.timestamps()
