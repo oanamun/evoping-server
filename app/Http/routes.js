@@ -26,24 +26,24 @@ Route.group('version1', function () {
   Route.post('/project', 'ProjectController.store')
   Route.delete('/project/:id', 'ProjectController.destroy')
 
-  Route.get('/device', 'DeviceController.index')
+  Route.get('project/:id/device', 'DeviceController.index')
   Route.post('/device', 'DeviceController.store')
-  Route.put('/device', 'DeviceController.update')
+  Route.put('/device/:id', 'DeviceController.update')
   Route.delete('/device/:id', 'DeviceController.destroy')
 
-  Route.get('/check', 'CheckController.index')
+  Route.get('device/:id/check', 'CheckController.index')
   Route.post('/check', 'CheckController.store')
-  Route.put('/check', 'CheckController.update')
+  Route.put('/check/:id', 'CheckController.update')
   Route.delete('/check/:id', 'CheckController.destroy')
 
-  Route.get('/alert-type-device', 'AlertTypeDeviceController.index')
+  Route.get('check/:id/alert-type-device', 'AlertTypeDeviceController.index')
   Route.post('/alert-type-device', 'AlertTypeDeviceController.store')
-  Route.put('/alert-type-device', 'AlertTypeDeviceController.update')
+  Route.put('/alert-type-device/:id', 'AlertTypeDeviceController.update')
   Route.delete('/alert-type-device/:id', 'AlertTypeDeviceController.destroy')
 
-  Route.get('/alert-log', 'AlertLogController.index')
+  Route.get('alert-type-device/:id/alert-log', 'AlertLogController.index')
   Route.post('/alert-log', 'AlertLogController.store')
-  Route.put('/alert-log', 'AlertLogController.update')
+  Route.put('/alert-log/:id', 'AlertLogController.update')
   Route.delete('/alert-log/:id', 'AlertLogController.delete')
 
 }).prefix('/api/v1').middleware('auth')
