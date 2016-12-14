@@ -2,11 +2,12 @@
 
 const Factory = use('Factory')
 const User = use('App/Model/User')
-const Hash = use('Hash')
 
 class UserSeeder {
+  *run() {
+  }
 
-  * run() {
+  * go() {
     const users = yield User.all()
     for (let user of users) {
       yield user.delete();
