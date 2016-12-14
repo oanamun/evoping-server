@@ -19,6 +19,10 @@
     "adonis-framework": "^3.0.5",
     "adonis-lucid": "^3.0.10",
     "adonis-middleware": "^1.0.8",
+    "adonis-redis": "^1.0.1",
+    "co": "^4.6.0",
+    "socket.io": "^1.7.2",
+    "socketio-jwt": "^4.5.0",
     "standard": "^8.4.0",
     "youch": "^1.0.1"
   },
