@@ -5,13 +5,13 @@ const Device = use('App/Model/Device')
 const Project = use('App/Model/Project')
 
 class DeviceSeeder {
-
-  * run() {
+  *run() {
+  }
+  * go() {
     const devices = yield Device.all()
     for (let device of devices) {
       yield device.delete();
     }
-
     const project = yield Project.query().first()
     yield project
       .Device()

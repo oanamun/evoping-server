@@ -5,8 +5,9 @@ const Check = use('App/Model/Check')
 const Device = use('App/Model/Device')
 
 class CheckSeeder {
-
-  * run() {
+  *run() {
+  }
+  * go() {
     const checks = yield Check.all()
     for (let check of checks) {
       yield check.delete();
