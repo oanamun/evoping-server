@@ -13,7 +13,7 @@ class DevicesTableSchema extends Schema {
       table.timestamps()
 
       table.integer('project_id').unsigned()
-      table.foreign('project_id').references('projects.id')
+      table.foreign('project_id').references('projects.id').onDelete('CASCADE')
     })
   }
 

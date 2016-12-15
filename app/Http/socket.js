@@ -28,7 +28,7 @@ module.exports = function (server) {
     for (let check of checks) {
       setInterval(function () {
         request({
-          method: JSON.parse(check.special_info).method,
+          method: check.special_info.method,
           uri: check.host,
           port: check.port,
           timeout: check.max_response_timeout * 1000,

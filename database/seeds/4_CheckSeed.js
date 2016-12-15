@@ -21,7 +21,7 @@ class CheckSeeder {
         host: 'http://google.com',
         port: 80,
         type: 'web',
-        special_info: JSON.stringify({method: 'GET'}),
+        special_info: {method: 'GET'},
         check_interval: 5,
         max_response_time: 60,
       }, {
@@ -29,7 +29,7 @@ class CheckSeeder {
         host: 'http://www.googlegooglegooglegooel.com',
         port: 80,
         type: 'web',
-        special_info: JSON.stringify({method: 'GET'}),
+        special_info: {method: 'GET'},
         check_interval: 5,
         max_response_time: 60,
       }])

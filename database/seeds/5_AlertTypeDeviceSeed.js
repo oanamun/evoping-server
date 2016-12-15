@@ -19,15 +19,15 @@ class AlertTypeDeviceSeeder {
       yield check
         .AlertTypeDevice()
         .createMany([{
-          alert_info: JSON.stringify({'email': 'test1@example.com', 'name': 'Test1'}),
+          alert_info: {'email': 'test1@example.com', 'name': 'Test1'},
           alert_interval: 20,
           alert_type: 'email'
         }, {
-          alert_info: JSON.stringify({'email': 'test2@example.com', 'name': 'Test2'}),
+          alert_info: {'email': 'test2@example.com', 'name': 'Test2'},
           alert_interval: 34,
           alert_type: 'email'
         }, {
-          alert_info: JSON.stringify({'email': 'test3@example.com', 'name': 'Test3'}),
+          alert_info: {'email': 'test3@example.com', 'name': 'Test3'},
           alert_type: 'sms'
         }])
     }
