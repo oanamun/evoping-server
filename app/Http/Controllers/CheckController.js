@@ -17,7 +17,7 @@ class CheckController {
   }
 
   * update(request, response) {
-    const check = yield Check.findBy('id',request.param('id'))
+    const check = yield Check.findOrFail(request.param('id'))
     check.fill(request.all())
     yield check.save()
     response.json(check)
@@ -26,7 +26,7 @@ class CheckController {
   * destroy(request, response) {
     const check = yield Check.findOrFail(request.param('id'))
     yield check.delete()
-    response.json({'message': 'Check deleted', data:check})
+    response.json({'message': 'Check deleted', data: check})
   }
 
 }

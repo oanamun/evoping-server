@@ -16,7 +16,7 @@ class ProjectController {
   }
 
   * update(request, response) {
-    const project = yield Project.findBy('id',request.param('id'))
+    const project = yield Project.findOrFail(request.param('id'))
     project.fill(request.all())
     yield project.save()
     response.json(project)

@@ -17,7 +17,7 @@ class DeviceController {
   }
 
   * update(request, response) {
-    const device = yield Device.findBy('id',request.param('id'))
+    const device = yield Device.findOrFail(request.param('id'))
     device.fill(request.all())
     yield device.save()
     response.json(device)
@@ -26,7 +26,7 @@ class DeviceController {
   * destroy(request, response) {
     const device = yield Device.findOrFail(request.param('id'))
     yield device.delete()
-    response.json({'message': 'Device deleted', data:device})
+    response.json({'message': 'Device deleted', data: device})
   }
 
 }

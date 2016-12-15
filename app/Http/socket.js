@@ -17,7 +17,9 @@ const add_check_to_redis = co.wrap(function*(check_id, data) {
 });
 
 const load_alert_type_device = co.wrap(function*(check) {
-  yield check.related('AlertTypeDevice').load()
+  yield check.related('AlertTypeDevice.AlertLog').scope('AlertLog', (builder) => {
+    builder.orderBy('created_at', 'desc').limit(1)
+  }).load()
   return check.toJSON();
 });
 
@@ -51,8 +53,8 @@ module.exports = function (server) {
           console.log(`${check.name} error`);
           io.to(check.id).emit({error: true});
           add_check_to_redis(check.id, JSON.stringify({error: true}))
-          load_alert_type_device(check).then(alert_type_device => {
-            Event.fire('invalid.check', alert_type_device)
+          load_alert_type_device(check).then(check => {
+            Event.fire('invalid.check', check)
           })
         });
       }, check.check_interval * 1000)
@@ -67,11 +69,10 @@ module.exports = function (server) {
     //this socket is authenticated, we are good to handle more events from it.
     const user_id = socket.decoded_token.payload;
     console.log('user ' + user_id + ' connected')
-    socket.on('join', function (room) {
-      socket.join(room);
+    socket.on('join', function (check_id) {
+      socket.join(check_id);
     });
     socket.on('disconnect', function () {
-      //clearInterval(refresh_point);
       socket.disconnect();
     });
   })

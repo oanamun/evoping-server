@@ -17,7 +17,7 @@ class AlertTypeDeviceController {
   }
 
   * update(request, response) {
-    const alert_type_device = yield AlertTypeDevice.findBy('id',request.param('id'))
+    const alert_type_device = yield AlertTypeDevice.findOrFail(request.param('id'))
     alert_type_device.fill(request.all())
     yield alert_type_device.save()
     response.json(alert_type_device)
@@ -26,7 +26,7 @@ class AlertTypeDeviceController {
   * destroy(request, response) {
     const alert_type_device = yield AlertTypeDevice.findOrFail(request.param('id'))
     yield alert_type_device.delete()
-    response.json({'message': 'Alert Type Device deleted', data:alert_type_device})
+    response.json({'message': 'Alert Type Device deleted', data: alert_type_device})
   }
 
 }
