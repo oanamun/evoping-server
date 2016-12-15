@@ -24,6 +24,7 @@ Route.post('/signup', 'AuthController.signup')
 Route.group('version1', function () {
   Route.get('/project', 'ProjectController.index')
   Route.post('/project', 'ProjectController.store')
+  Route.put('/project/:id', 'ProjectController.update')
   Route.delete('/project/:id', 'ProjectController.destroy')
 
   Route.get('project/:id/device', 'DeviceController.index')
@@ -42,8 +43,5 @@ Route.group('version1', function () {
   Route.delete('/alert-type-device/:id', 'AlertTypeDeviceController.destroy')
 
   Route.get('alert-type-device/:id/alert-log', 'AlertLogController.index')
-  Route.post('/alert-log', 'AlertLogController.store')
-  Route.put('/alert-log/:id', 'AlertLogController.update')
-  Route.delete('/alert-log/:id', 'AlertLogController.delete')
 
 }).prefix('/api/v1').middleware('auth')
