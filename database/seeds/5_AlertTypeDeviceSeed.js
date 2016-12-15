@@ -7,24 +7,30 @@ const AlertTypeDevice = use('App/Model/AlertTypeDevice')
 class AlertTypeDeviceSeeder {
   *run() {
   }
-  * go () {
+
+  * go() {
     const alertTypeDevices = yield AlertTypeDevice.all()
     for (let alertTypeDevice of alertTypeDevices) {
       yield alertTypeDevice.delete();
     }
 
-    const check = yield Check.query().first()
-    yield check
-      .AlertTypeDevice()
-      .createMany([{
-        alert_info: 'AlertTypeDevice valid 1',
-        alert_interval: 20,
-      }, {
-        alert_info: 'AlertTypeDevice valid 2',
-        alert_interval: 34,
-      }, {
-        alert_info: 'AlertTypeDevice valid 3',
-      }])
+    const checks = yield Check.all()
+    for (let check of checks) {
+      yield check
+        .AlertTypeDevice()
+        .createMany([{
+          alert_info: JSON.stringify({'email': 'test1@example.com', 'name': 'Test1'}),
+          alert_interval: 20,
+          alert_type: 'email'
+        }, {
+          alert_info: JSON.stringify({'email': 'test2@example.com', 'name': 'Test2'}),
+          alert_interval: 34,
+          alert_type: 'email'
+        }, {
+          alert_info: JSON.stringify({'email': 'test3@example.com', 'name': 'Test3'}),
+          alert_type: 'sms'
+        }])
+    }
   }
 
 }

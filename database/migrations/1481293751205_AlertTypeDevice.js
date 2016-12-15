@@ -9,6 +9,7 @@ class AlertTypeDevicesTableSchema extends Schema {
       table.increments()
       table.json('alert_info')
       table.integer('alert_interval').unsigned().default(60)
+      table.enum('alert_type', ['email', 'sms', 'slack']).default('email')
       table.timestamps()
 
       table.integer('check_id').unsigned()

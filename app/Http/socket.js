@@ -3,9 +3,10 @@ const socketioJwt = require('socketio-jwt');
 const Env = use('Env');
 const Redis = use('Redis');
 const Check = use('App/Model/Check')
-const co = require('co');
-//const Request = use('Adonis/Src/Request')
+const Event = use('Event')
+const User = use('App/Model/User')
 const request = use('request')
+const co = require('co');
 
 const checks = co.wrap(function*() {
   return yield Check.all();
@@ -13,6 +14,11 @@ const checks = co.wrap(function*() {
 
 const add_check_to_redis = co.wrap(function*(check_id, data) {
   return yield Redis.lpush(check_id, data)
+});
+
+const load_alert_type_device = co.wrap(function*(check) {
+  yield check.related('AlertTypeDevice').load()
+  return check.toJSON();
 });
 
 module.exports = function (server) {
@@ -24,6 +30,7 @@ module.exports = function (server) {
         request({
           method: JSON.parse(check.special_info).method,
           uri: check.host,
+          port: check.port,
           timeout: check.max_response_timeout * 1000,
           time: true,
           gzip: true
@@ -35,15 +42,18 @@ module.exports = function (server) {
           }))
 
           if (res && res.statusCode === 200) {
-            console.log(res.request.elapsedTime + "ms");
+            console.log(`${check.name} ${res.request.elapsedTime} ms`);
           } else {
             console.log('not')
           }
         }).on('error', function (e) {
           //console.log(e)
-          console.log('error')
+          console.log(`${check.name} error`);
           io.to(check.id).emit({error: true});
           add_check_to_redis(check.id, JSON.stringify({error: true}))
+          load_alert_type_device(check).then(alert_type_device => {
+            Event.fire('invalid.check', alert_type_device)
+          })
         });
       }, check.check_interval * 1000)
     }
