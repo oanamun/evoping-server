@@ -2,7 +2,6 @@
 
 const UserSeed = require('./1_UserSeed');
 const ProjectSeed = require('./2_ProjectSeed');
-const DeviceSeed = require('./3_DeviceSeed');
 const CheckSeed = require('./4_CheckSeed');
 const AlertTypeDeviceSeed = require('./5_AlertTypeDeviceSeed');
 const AlertLogSeed = require('./6_AlertLogSeed');
@@ -26,7 +25,6 @@ class DatabaseSeeder {
     // i am doing this because the run method will not execute the seeds in order
     yield new UserSeed().go();
     yield new ProjectSeed().go();
-    yield new DeviceSeed().go();
     yield new CheckSeed().go();
     yield new AlertTypeDeviceSeed().go();
     yield new AlertLogSeed().go();

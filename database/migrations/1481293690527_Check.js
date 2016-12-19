@@ -16,8 +16,8 @@ class ChecksTableSchema extends Schema {
       table.integer('max_response_time').unsigned().default(60)
       table.timestamps()
 
-      table.integer('device_id').unsigned()
-      table.foreign('device_id').references('devices.id').onDelete('CASCADE')
+      table.integer('project_id').unsigned()
+      table.foreign('project_id').references('projects.id').onDelete('CASCADE')
     })
   }
 

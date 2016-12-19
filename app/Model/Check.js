@@ -12,8 +12,8 @@ class Check extends Lucid {
     return JSON.stringify(special_info)
   }
 
-  Device() {
-    return this.belongsTo('App/Model/Device')
+  Project() {
+    return this.belongsTo('App/Model/Project')
   }
 
   AlertTypeDevice() {

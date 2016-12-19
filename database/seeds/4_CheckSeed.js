@@ -1,20 +1,17 @@
 'use strict'
 
-const Factory = use('Factory')
+const Database = use('Database')
 const Check = use('App/Model/Check')
-const Device = use('App/Model/Device')
+const Project = use('App/Model/Project')
 
 class CheckSeeder {
   *run() {
   }
   * go() {
-    const checks = yield Check.all()
-    for (let check of checks) {
-      yield check.delete();
-    }
+    yield Database.table('checks').delete()
 
-    const device = yield Device.query().first()
-    yield device
+    const project = yield Project.query().first()
+    yield project
       .Check()
       .createMany([{
         name: 'Check valid',

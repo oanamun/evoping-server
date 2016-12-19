@@ -8,8 +8,8 @@ class Project extends Lucid {
     return this.belongsToMany('App/Model/User')
   }
 
-  Device() {
-    return this.hasMany('App/Model/Device')
+  Check() {
+    return this.hasMany('App/Model/Check')
   }
 }
 

@@ -1,17 +1,14 @@
 'use strict'
 
-const Factory = use('Factory')
 const User = use('App/Model/User')
+const Database = use('Database')
 
 class UserSeeder {
   *run() {
   }
 
   * go() {
-    const users = yield User.all()
-    for (let user of users) {
-      yield user.delete();
-    }
+    yield Database.table('users').delete()
 
     yield User.create({
       email: 'user1@example.com',

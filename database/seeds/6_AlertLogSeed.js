@@ -1,6 +1,6 @@
 'use strict'
 
-const Factory = use('Factory')
+const Database = use('Database')
 const AlertTypeDevice = use('App/Model/AlertTypeDevice')
 const AlertLog = use('App/Model/AlertLog')
 const Hash = use('Hash')
@@ -9,10 +9,7 @@ class AlertLogSeeder {
   *run() {
   }
   * go() {
-    const alertLogs = yield AlertLog.all()
-    for (let alertLog of alertLogs) {
-      yield alertLog.delete()
-    }
+    yield Database.table('alert_logs').delete()
 
     const alertTypeDevice = yield AlertTypeDevice.query().first()
 

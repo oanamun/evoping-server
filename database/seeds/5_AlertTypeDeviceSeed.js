@@ -1,6 +1,6 @@
 'use strict'
 
-const Factory = use('Factory')
+const Database = use('Database')
 const Check = use('App/Model/Check')
 const AlertTypeDevice = use('App/Model/AlertTypeDevice')
 
@@ -9,10 +9,7 @@ class AlertTypeDeviceSeeder {
   }
 
   * go() {
-    const alertTypeDevices = yield AlertTypeDevice.all()
-    for (let alertTypeDevice of alertTypeDevices) {
-      yield alertTypeDevice.delete();
-    }
+    yield Database.table('alert_type_devices').delete()
 
     const checks = yield Check.all()
     for (let check of checks) {

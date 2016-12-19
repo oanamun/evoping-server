@@ -27,12 +27,7 @@ Route.group('version1', function () {
   Route.put('/project/:id', 'ProjectController.update')
   Route.delete('/project/:id', 'ProjectController.destroy')
 
-  Route.get('project/:id/device', 'DeviceController.index')
-  Route.post('/device', 'DeviceController.store')
-  Route.put('/device/:id', 'DeviceController.update')
-  Route.delete('/device/:id', 'DeviceController.destroy')
-
-  Route.get('device/:id/check', 'CheckController.index')
+  Route.get('project/:id/check', 'CheckController.index')
   Route.post('/check', 'CheckController.store')
   Route.put('/check/:id', 'CheckController.update')
   Route.delete('/check/:id', 'CheckController.destroy')

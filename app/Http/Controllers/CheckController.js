@@ -4,8 +4,8 @@ const Check = use('App/Model/Check')
 class CheckController {
 
   * index(request, response) {
-    let device_id = request.param('id')
-    const checks = yield Check.query().where('device_id', device_id)
+    let project_id = request.param('id')
+    const checks = yield Check.query().where('project_id', project_id)
     response.json(checks)
   }
 
