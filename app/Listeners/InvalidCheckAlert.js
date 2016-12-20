@@ -4,11 +4,10 @@ const InvalidCheckAlert = exports = module.exports = {}
 
 InvalidCheckAlert.sendCheckEmail = function *(check) {
   for (let alert_type_device of check.AlertTypeDevice) {
-
     //transformam created_at intr-un obiect Date si adaugam alert_interval la minute
-    let alert_log = alert_type_device.AlertLog[0];
+    let alert_log = alert_type_device.AlertLog;
     let verify_interval = true;
-    if (alert_log) {
+    if (alert_log.length > 0) {
       let alert_interval = new Date(alert_log.created_at);
       alert_interval.setMinutes(alert_interval.getMinutes() + alert_type_device.alert_interval);
       verify_interval = alert_interval.getTime() < Date.now()

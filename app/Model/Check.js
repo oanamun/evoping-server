@@ -19,6 +19,10 @@ class Check extends Lucid {
   AlertTypeDevice() {
     return this.hasMany('App/Model/AlertTypeDevice')
   }
+
+  AlertLog() {
+    return this.hasManyThrough('App/Model/AlertLog', 'App/Model/AlertTypeDevice')
+  }
 }
 
 module.exports = Check
