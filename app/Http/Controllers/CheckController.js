@@ -5,7 +5,7 @@ class CheckController {
 
   * index(request, response) {
     let project_id = request.param('id')
-    const checks = yield Check.query().where('project_id', project_id)
+    const checks = yield Check.query().where('project_id', project_id).fetch()
     response.json(checks)
   }
 

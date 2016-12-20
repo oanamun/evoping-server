@@ -5,7 +5,7 @@ class AlertTypeDeviceController {
 
   * index(request, response) {
     let check_id = request.param('id')
-    const alert_type_devices = yield AlertTypeDevice.query().where('check_id', check_id)
+    const alert_type_devices = yield AlertTypeDevice.query().where('check_id', check_id).fetch()
     response.json(alert_type_devices)
   }
 

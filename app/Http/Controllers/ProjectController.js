@@ -1,20 +1,21 @@
 'use strict'
 const Project = use('App/Model/Project')
 const User = use('App/Model/User')
-const Database = use('Database')
 
 class ProjectController {
 
   * index(request, response) {
     let user = yield request.auth.getUser()
-    const projects = yield user.Project().fetch()
-    response.json(projects)
+    console.log(user)
+    yield user.related('Project.Check').load()
+    response.json(user)
   }
 
   * store(request, response) {
+    let user = yield request.auth.getUser()
     const project = new Project()
     project.fill(request.all())
-    yield project.save()
+    yield user.Project().save(project)
     response.json(project)
   }
 
