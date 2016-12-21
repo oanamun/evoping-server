@@ -1,5 +1,6 @@
 'use strict'
 const Check = use('App/Model/Check')
+const run_check = use('App/Http/socket').run_check;
 
 class CheckController {
 
@@ -13,6 +14,7 @@ class CheckController {
     const check = new Check()
     check.fill(request.all())
     yield check.save()
+    run_check(check);
     response.json(check)
   }
 
@@ -20,6 +22,7 @@ class CheckController {
     const check = yield Check.findOrFail(request.param('id'))
     check.fill(request.all())
     yield check.save()
+    run_check(check);
     response.json(check)
   }
 
