@@ -31,6 +31,7 @@ class CheckController {
     const check = yield Check.findOrFail(request.param('id'))
     yield check.delete()
     Redis.publish('change_check', JSON.stringify({'check_id': check.id, 'action': 'remove'}))
+    Redis.del(check.id)
     response.json({'message': 'Check deleted', data: check})
   }
 

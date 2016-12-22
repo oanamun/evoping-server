@@ -21,7 +21,7 @@ const get_check = co.wrap(function*(check_id) {
 });
 
 const add_check_to_redis = co.wrap(function*(check, data) {
-  return yield Redis.lpush(check.project_id, JSON.stringify({check_id: check.id, data}))
+  return yield Redis.lpush(check.id, JSON.stringify({project_id: check.project_id, data}))
 });
 
 const load_alert_log = co.wrap(function*(check) {
@@ -105,8 +105,8 @@ function main(server) {
   })).on('authenticated', function (socket) {
     //this socket is authenticated, we are good to handle more events from it.
     const user_id = socket.decoded_token.payload;
-    socket.on('join', function (check_id) {
-      socket.join(check_id);
+    socket.on('join', function (project_id) {
+      socket.join(project_id);
     });
     socket.on('disconnect', function () {
       socket.disconnect();

@@ -22,7 +22,7 @@ Route.post('/login', 'AuthController.login')
 Route.post('/signup', 'AuthController.signup')
 
 Route.group('version1', function () {
-  Route.get('/check/:id', 'CheckLogController.index')
+  Route.get('/check-log/:id', 'CheckLogController.index')
   Route.get('/project/:id/last-check', 'CheckLogController.last_check')
 
   Route.get('/project', 'ProjectController.index')
