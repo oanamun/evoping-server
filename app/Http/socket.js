@@ -8,8 +8,9 @@ const AlertLog = use('App/Model/AlertLog')
 const Event = use('Event')
 const User = use('App/Model/User')
 const request = use('request')
-const co = require('co');
-let io;
+const co = require('co')
+let io
+let remove_check = {}
 
 const get_checks = co.wrap(function*() {
   return yield Check.query().with('AlertTypeDevice').fetch();
@@ -20,7 +21,7 @@ const get_check = co.wrap(function*(check_id) {
 });
 
 const add_check_to_redis = co.wrap(function*(check, data) {
-  return yield Redis.lpush(check.project_id, JSON.stringify({ check_id: check.id, data }))
+  return yield Redis.lpush(check.project_id, JSON.stringify({check_id: check.id, data}))
 });
 
 const load_alert_log = co.wrap(function*(check) {
@@ -55,8 +56,8 @@ function make_request(check) {
   }).on('error', function (e) {
     //console.log(e)
     console.log(`${check.name} error`);
-    io.to(check.project_id).emit(check.id, { error: true });
-    add_check_to_redis(check, { error: true })
+    io.to(check.project_id).emit(check.id, {error: true});
+    add_check_to_redis(check, {error: true})
     load_alert_log(check).then(check_with_alert => {
       Event.fire('invalid.check', check_with_alert.toJSON())
     })
@@ -66,26 +67,35 @@ function make_request(check) {
 
 function run_check(check) {
   //do work
-  //console.log(check)
   make_request(check);
   //queue more work
   setTimeout(function () {
-    get_check(check.id).then((new_check) => {
-      // check if the new_check exists
-      if (new_check.updated_at === check.updated_at) {
-        run_check(new_check);
-      }
-    });
+    if (!remove_check[check.id]) {
+      run_check(check)
+    }else{
+      delete remove_check[check.id]
+    }
   }, check.check_interval * 1000)
 }
 
 function main(server) {
 
   io = use('socket.io')(server)
-  // the checks are needed if the servers fails and we need to restart all cheks
+  // start to run all checks on server start
   get_checks().then((checks) => {
     for (let check of checks) {
       run_check(check)
+    }
+  })
+
+  Redis.subscribe('change_check', function *(action) {
+    action = JSON.parse(action)
+    if (action.action == 'store') {
+      get_check(action.check_id).then((new_check) => {
+        run_check(new_check)
+      })
+    } else if (action.action == 'remove') {
+      remove_check[action.check_id] = 'remove';
     }
   })
 
@@ -95,7 +105,6 @@ function main(server) {
   })).on('authenticated', function (socket) {
     //this socket is authenticated, we are good to handle more events from it.
     const user_id = socket.decoded_token.payload;
-    console.log('user ' + user_id + ' connected')
     socket.on('join', function (check_id) {
       socket.join(check_id);
     });
