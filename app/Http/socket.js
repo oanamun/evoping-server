@@ -42,7 +42,7 @@ function make_request(check) {
     time: true,
     gzip: true
   }).on('response', function (res) {
-    io.to(check.project_id).emit(check.id, res.request.elapsedTime);
+    io.to(check.project_id).emit(check.project_id, {check_id: check.id, data: res.request.elapsedTime});
     add_check_to_redis(check, {
       elapsedTime: res.request.elapsedTime,
       statusCode: res.statusCode
@@ -56,7 +56,7 @@ function make_request(check) {
   }).on('error', function (e) {
     //console.log(e)
     console.log(`${check.name} error`);
-    io.to(check.project_id).emit(check.id, {error: true});
+    io.to(check.project_id).emit(check.project_id, {check_id: check.id, data: false});
     add_check_to_redis(check, {error: true})
     load_alert_log(check).then(check_with_alert => {
       Event.fire('invalid.check', check_with_alert.toJSON())
