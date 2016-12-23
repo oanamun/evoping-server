@@ -1,0 +1,44 @@
+version: '2'
+
+services:
+ web:
+  restart: always
+  build: ./docker/nginx
+  links:
+    - api
+  ports:
+    - "80:80"
+
+ mysql:
+   image: mysql:8.0
+   environment:
+     MYSQL_ROOT_PASSWORD: "evoping321"
+     MYSQL_DATABASE: "evoping_db"
+     MYSQL_USER: "evoping"
+     MYSQL_PASSWORD: "evoping321"
+   volumes:
+     - db-data:/var/lib/mysql
+   ports:
+     - "3306:3306"
+
+ redis:
+   image: redis:3.2.4
+   ports:
+     - "6379:6379"
+
+ api:
+   build: .
+   volumes:
+     - .:/app
+   ports:
+     - "3000:3000"
+   depends_on:
+     - mysql
+     - redis
+   links:
+     - mysql
+     - redis
+
+volumes:
+ db-data:
+   driver: local
